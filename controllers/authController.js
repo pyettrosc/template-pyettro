@@ -25,6 +25,22 @@ exports.registrar = async (req, res) => {
 
 // Rota de login
 exports.login = async (req, res) => {
+    const { email, senha } = req.body;
+    console.log(email);
+
+    const usuario = await User.findOne({ where: { email } });
+
+    if (!usuario || !senha)
+        return res.status(401).json({ erro: 'Credenciais inválidas' });
+
+    res.json({
+        mensagem: 'Login bem-sucedido',
+        nome: usuario.nome,
+    });
+};
+
+// Rota de login
+exports.login = async (req, res) => {
   const { email, senha } = req.body;
 
   // Busca usuário pelo e-mail
